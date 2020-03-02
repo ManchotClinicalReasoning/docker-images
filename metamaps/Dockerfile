@@ -19,7 +19,7 @@ RUN ./bootstrap.sh && \
     ./configure --with-boost=/usr && \ 
     make metamaps
 
-#RUN apt-get -y autoremove build-essential autoconf
+RUN apt-get -y autoremove build-essential autoconf
 
-#WORKDIR /scripts
+WORKDIR /scripts
 
