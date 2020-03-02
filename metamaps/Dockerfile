@@ -1,22 +1,25 @@
 FROM debian:stable-slim
+
+ARG DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y autoconf build-essential perl zlib1g-dev
+    apt-get install -y autoconf build-essential perl=5.28.1-6 zlib1g-dev libboost-all-dev=1.67.0.1 && \
+    apt-get clean && \
+    rm -rf /var/apt/lists
+
+#Create "virtual" boost library that matches the metaMaps build specification
+RUN ln -s /usr/lib/x86_64-linux-gnu/libboost_math_c99.a /usr/lib/libboost_math_c99.a
 
 COPY applyMetaMaps.pl /scripts/
 ADD metamaps.tar.gz /
-ADD boost_1_60_0.tar.gz /home/
-
-# Install Boost
-WORKDIR /home/boost_1_60_0
-RUN ./bootstrap.sh --prefix=/usr/local --with-libraries=program_options
-RUN ./b2 install
-WORKDIR /home
-RUN rm -rf boost_1_60_0
 
 WORKDIR /metaMaps
 
-RUN ./bootstrap.sh
-RUN ./configure --with-boost=/usr/local/lib
+RUN ./bootstrap.sh && \ 
+    ./configure --with-boost=/usr && \ 
+    make metamaps
 
-WORKDIR /scripts
+#RUN apt-get -y autoremove build-essential autoconf
+
+#WORKDIR /scripts
+
