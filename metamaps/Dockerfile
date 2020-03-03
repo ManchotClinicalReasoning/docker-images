@@ -10,7 +10,6 @@ RUN apt-get update && \
 #Create "virtual" boost library that matches the metaMaps build specification
 RUN ln -s /usr/lib/x86_64-linux-gnu/libboost_math_c99.a /usr/lib/libboost_math_c99.a
 
-COPY applyMetaMaps.pl /scripts/
 ADD metamaps.tar.gz /
 
 WORKDIR /metaMaps
@@ -21,3 +20,4 @@ RUN ./bootstrap.sh && \
 
 RUN apt-get -y autoremove build-essential autoconf
 
+COPY applyMetaMaps.pl /scripts/
