@@ -26,7 +26,7 @@ GetOptions (
 	'threads:s' => \$threads
 );
 
-unless((defined $inputFASTQ) and (defined $outputDir) (defined $database))
+unless((defined $inputFASTQ) and (defined $outputDir) and (defined $database))
 {
 	die "Please specify --inputFASTQ --outputDir and --database";
 }
@@ -48,7 +48,7 @@ unless(-d $outputDir)
 
 
 $inputFASTQ = abs_path($inputFASTQ);
-$metamaps_output_dir = abs_path($outputDir);
+my $metamaps_output_dir = abs_path($outputDir);
 
 $maxmemory = ($maxmemory) ? "--maxmemory $maxmemory " : '';
 $threads = ($threads) ? "--threads $threads " : '';
