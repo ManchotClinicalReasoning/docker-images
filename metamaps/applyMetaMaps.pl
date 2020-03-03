@@ -53,6 +53,6 @@ my $metamaps_output_dir = abs_path($outputDir);
 $maxmemory = ($maxmemory) ? "--maxmemory $maxmemory " : '';
 $threads = ($threads) ? "--threads $threads " : '';
 
-my $metamaps_cmds = qq(./metamaps mapDirectly --all $maxmemory $threads -r ${database}/DB.fa -q $inputFASTQ -o ${metamaps_output_dir}/analysis && ./metamaps classify $threads --mappings ${metamaps_output_dir}/analysis --DB ${database});
+my $metamaps_cmds = qq(metamaps mapDirectly --all $maxmemory $threads -r ${database}/DB.fa -q $inputFASTQ -o ${metamaps_output_dir}/analysis && metamaps classify $threads --mappings ${metamaps_output_dir}/analysis --DB ${database});
 system($metamaps_cmds) and die "Command failed: $metamaps_cmds";
 
