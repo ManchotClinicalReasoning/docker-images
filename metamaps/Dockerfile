@@ -3,7 +3,7 @@ FROM debian:stable-slim
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
-    apt-get install -y autoconf build-essential perl=5.28.1-6 liblist-moreutils-perl zlib1g-dev libboost-all-dev=1.67.0.1 && \
+    apt-get install -y autoconf build-essential zlib1g-dev libboost-all-dev=1.67.0.1 && \
     apt-get clean && \
     rm -rf /var/apt/lists
 
@@ -21,5 +21,3 @@ RUN ./bootstrap.sh && \
 #RUN apt-get -y autoremove build-essential autoconf
 
 ENV PATH="/metaMaps:${PATH}"
-
-COPY applyMetaMaps.pl /scripts/
