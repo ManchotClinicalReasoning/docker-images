@@ -1,5 +1,9 @@
 FROM debian:stable-slim
 
+LABEL website="https://github.com/lh3/minimap2 and https://github.com/NCBI-Hackathons/NovoGraph"
+LABEL license="https://github.com/lh3/minimap2/blob/master/LICENSE.txt and https://github.com/NCBI-Hackathons/NovoGraph/blob/master/LICENSE"
+
+
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y perl liblist-moreutils-perl r-base git
