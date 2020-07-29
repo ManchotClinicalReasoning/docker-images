@@ -30,16 +30,11 @@ unless($humanGenomeFASTA and $inputFASTQ and $outputFASTQ)
 print "File $humanGenomeFASTA not found" unless(-e $humanGenomeFASTA);
 print "File $inputFASTQ not found" unless(-e $inputFASTQ);
 
-unless((-e $minimap2_bin) and (-x $minimap2_bin))
-{
-	die "Can't find metamaps executable at expected location: $minimap2_bin";
-}
-
 my $minimap2_output_file = $outputFASTQ . '.mappings';
 $maxmemory = ($maxmemory) ? "--maxmemory $maxmemory " : '';
 $threads = ($threads) ? "-t $threads " : '';
 
-my $minimap2_cmd = qq($minimap2_bin $threads -x map-ont $humanGenomeFASTA $inputFASTQ > $minimap2_output_file);
+my $minimap2_cmd = qq($minimap2_bin $threads -c -x map-ont $humanGenomeFASTA $inputFASTQ > $minimap2_output_file);
 system($minimap2_cmd) and die "Cannot execute: $minimap2_cmd";
  
 my %removeReadIDs; 
