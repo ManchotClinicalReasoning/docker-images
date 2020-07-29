@@ -3,13 +3,14 @@ import json
 import argparse
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 parser = argparse.ArgumentParser(description='Create categorical AMR plots')
-parser.add_argument('d', type=str,help='card json')
-parser.add_argument('c', type=str,help='categories')
-parser.add_argument('s', type=str,nargs='+',help='samples')
-parser.add_argument('f', type=str,help='figure')
-parser.add_argument('t', type=str,help='table')
+parser.add_argument('-d', type=str,help='card json')
+parser.add_argument('-c', type=str,help='categories')
+parser.add_argument('-s', type=str,nargs='+',help='samples')
+parser.add_argument('-f', type=str,help='figure')
+parser.add_argument('-t', type=str,help='table')
 args = parser.parse_args()
 
 
@@ -22,7 +23,7 @@ CARD = json.load(open(args.d,'r'))
 CARDByName = {CARD[k]['ARO_name'] : CARD[k] for k in CARD if 'ARO_name' in CARD[k]}
 CARDByID = {CARD[k]['ARO_accession'] : CARD[k] for k in CARD if 'ARO_id' in CARD[k]}
 
-drugs = args.c
+drugs = json.load(open(args.c,'r'))
 
 data = []
 
@@ -64,5 +65,5 @@ for f in args.s:
 df = pd.DataFrame(data, columns =['time', 'drug', 'count'])
 df.to_csv(args.t)
 plt.figure()
-df.plot(x='time',y='count',color='drug')
+sns.lineplot(x='time',y='count',color='drug',data=df)
 plt.savefig(args.f)
